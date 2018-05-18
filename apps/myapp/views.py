@@ -32,8 +32,8 @@ def dashboard(req, user_id=None):
     context = {
         "products_not_sold" : Product.objects.filter(isSold=False, seller_id = req.session['id']),
         # "products_sold" : Product.objects.filter(isSold=True, seller_id=req.session['id']).select_related("seller"),
-        "products_sold" : Sales.objects.all().select_related("product", "buyer"),
-        "purchases" : Sales.objects.filter(buyer_id=req.session['id'])
+        "products_sold" : Sales.objects.all().select_related("product", "buyer").filter(product__isSold=True, product__seller_id=req.session['id']),
+        "purchases" : Sales.objects.filter(buyer_id=req.session['id']).select_related("product__seller", "buyer")
     }
 
     return render(req, 'myapp/dashboard.html', context)
