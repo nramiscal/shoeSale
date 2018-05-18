@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 	{% load static %} -->
+	<link rel="stylesheet" href="{% static 'myapp/css/dashboard.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<title>Dashboard</title>
+</head>
+<body>
+	<div class="container">
+			<fieldset>
+				<legend><h1>Hi {{request.session.name}}!</h1></legend>
+				<a href ="/logout"><button>Log Out</button></a> <a href ="/shoes"><button>Go To All Products</button></a>
+				<h3>Sell Product</h3>
+					<form class="" action="/sell" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="productName">Item Name</label>
+							<input type="text" class="form-control" name="name">
+						<div class="form-group">
+							<label for="productPrice">Price</label>
+							<input type="text" class="form-control" name="price" placeholder="$0.00">
+						</div>
+					  <button type="submit" class="btn btn-primary">Sell</button>
+					</form>
+			</fieldset>
+            <!-- {{products_not_sold}}
+            {{products_sold}}
+            {{purchases}} -->
+			<br><br><br><br>
+			<h4>Seller's Inventory</h4>
+			<table class="table table-bordered">
+				<tr>
+					<th>Product</th>
+					<th>Date Posted</th>
+					<th>Amount</th>
+					<th>Action</th>
+				</tr>
+                {% for i in products_not_sold %}
+				<tr>
+					<td>{{i.name}}</td>
+					<td>{{i.created_at}}</td>
+					<td>{{i.price}}</td>
+					<td><a href ="/remove"><button>Remove Item</button></a></td>
+				</tr>
+                {% endfor %}
+			</table>
+				<p> Total:  total $$$ </p>
+			<br><br><br><br>
+			<h4>Sales</h4>
+			<table class="table table-bordered">
+				<tr>
+					<th>Product</th>
+					<th>Date Sold</th>
+					<th>Buyer</th>
+					<th>Amount</th>
+				</tr>
+                {% for i in products_sold %}
+				<tr>
+					<td>{{i.product.name}}</td>
+					<td>{{i.date_sold}}</td>
+					<td>{{i.buyer.fname}}</td>
+					<td>{{i.product.price}}</td>
+				</tr>
+                {% endfor %}
+			</table>
+				<p> Total: total $$$ </p>
+			<br><br><br><br>
+			<h4>Purchases</h4>
+			<table class="table table-bordered">
+				<tr>
+					<th>Product</th>
+					<th>Date Bought</th>
+					<th>Seller</th>
+					<th>Amount</th>
+				</tr>
+                {% for i in purchases %}
+				<tr>
+					<td>{{i.product_id.name}}</td>
+					<td>{{i.date_sold}}</td>
+					<td></td>
+					<td>item price</td>
+				</tr>
+                {% endfor %}
+			</table>
+				<p> Total: total $$$ </p>
+	</div>
+
+</body>
+</html>

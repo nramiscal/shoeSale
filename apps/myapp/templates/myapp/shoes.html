@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 	{% load static %} -->
+	<link rel="stylesheet" href="{% static 'myapp/css/products.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<title>Products</title>
+</head>
+<body>
+	<div class="container">
+
+		<fieldset>
+			<legend><h1>Hi {{request.session.name}}!</h1></legend>
+		</fieldset>
+
+			<div class="nav">
+				<a href ="/dashboard"><button>Dashboard</button></a> <a href ="/"><button>Log Out</button></a>
+				<h3>All Products</h3>
+			</div>
+
+            <!-- <p>{{all_products_for_sale}}</p> -->
+
+			<table class="table table-bordered">
+				<tr>
+					<th>Product</th>
+					<th>Seller</th>
+					<th>Date Posted</th>
+					<th>Total</th>
+					<th>Action</th>
+				</tr>
+                {% for i in all_products_for_sale %}
+
+				<tr>
+					<td>{{i.name}}</td>
+					<td>{{i.seller_id.fname}}</td>
+					<td>{{i.created_at}}</td>
+					<td>{{i.price}}</td>
+					<td><a href ="/buy/{{i.id}}"><button>Purchase</button></a></td>
+				</tr>
+                {% endfor %}
+			</table>
+	</div>
+
+</body>
+</html>
